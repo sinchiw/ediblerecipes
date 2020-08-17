@@ -39,33 +39,37 @@ edibleRecipeController.storeIngredients = (req, res, next) => {
   }
 };
 
-edibleRecipeController.getRecipes = (req, res, next) => {
-  const search = `SELECT name FROM ingredients WHERE user_id=${id}`;
+// edibleRecipeController.getRecipes = (req, res, next) => {
+//   const search = `SELECT name FROM ingredients WHERE user_id=${req.cookies.user_id}`;
 
-  db.query(search).then((data) => {
-    let queryString = "";
-    for (let i = 0; i < data.length; i++) {
-      queryString = queryString + "ingredients=+" + data[i].name;
-    }
+//   db.query(search).then((data) => {
+//     console.log(data);
 
-    let search = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${queryString}&apiKey=4335e4647b4f4cc1b7a027fd1d3b1975`;
-  });
+//     let queryString = "";
+//     for (let i = 0; i < data.length; i++) {
+//       queryString = queryString + ",+" + data[i].name;
+//     }
 
-  //FETCH request instead of DB query
-  db.query(search)
-    .then((data) => {
-      res.locals.recipes = data.rows;
-      return next();
-    })
-    .catch((err) => {
-      console.log(err);
-      const error = {
-        log: "getRecipes express error handler caught unknown middleware error",
-        status: 400,
-        message: { err: "An error occurred" },
-      };
-      next(error);
-    });
-};
+//     console.log(queryString);
+//     //https://api.spoonacular.com/recipes/findByIngredients?ingredients=apples,+flour,+sugar&apiKey=4335e4647b4f4cc1b7a027fd1d3b1975
+//     // let search = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${queryString}&apiKey=4335e4647b4f4cc1b7a027fd1d3b1975`;
+//   });
+
+//   //FETCH request instead of DB query
+//   db.query(search)
+//     .then((data) => {
+//       res.locals.recipes = data.rows;
+//       return next();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       const error = {
+//         log: "getRecipes express error handler caught unknown middleware error",
+//         status: 400,
+//         message: { err: "An error occurred" },
+//       };
+//       next(error);
+//     });
+// };
 
 module.exports = edibleRecipeController;

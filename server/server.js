@@ -1,9 +1,11 @@
 const path = require("path");
+const fs = require("fs");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const userController = require("./controllers/userController.js");
 const cookieController = require("./controllers/cookieController.js");
 const edibleRecipeController = require("./controllers/edibleRecipeController.js");
+
 const app = express();
 const PORT = 3000;
 const cors = require("cors");
@@ -49,9 +51,9 @@ app.post(
   }
 );
 
-app.get("/resultrecipes", edibleRecipeController.getRecipes, (req, res) => {
-  res.status(200);
-});
+// app.get("/resultrecipes", edibleRecipeController.getRecipes, (req, res) => {
+//   res.status(200);
+// });
 
 app.get("/savedrecipes", (req, res) => {});
 
