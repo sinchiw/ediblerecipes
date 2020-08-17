@@ -2,15 +2,16 @@
 import React, { Component } from 'react';
 // import '../src/App.css';
 import axios from 'axios';
+import { withCookies } from 'react-cookie';
 
-export default class Login extends Component {
+class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			//   name: '',
 			password: '',
 			email: '',
-			isLogginIn: Boolean,
+			// isLogginIn: false,
 		};
 		// this.onChangeUsername = this.onChangeUsername.bind(this);
 		// this.onChangePassword = this.onChangePassword.bind(this);
@@ -27,18 +28,6 @@ export default class Login extends Component {
 			[name]: value,
 		});
 	}
-
-	//   onChangePassword(e) {
-	//     this.setState({
-	//       password: e.target.value,
-	//     });
-	//   }
-
-	// onChangeEmail (e) {
-	// 	this.setState({
-	// 		email: e.target.value
-	// 	})
-	// }
 
 	onSubmit (e) {
 		e.preventDefault();
@@ -64,9 +53,12 @@ export default class Login extends Component {
 			.then((response) => response.json())
 			.then((data) => console.log('FETCH data', data))
 			.catch((err) => console.log('ERROR in login fetch', err));
+		console.log("COOKIES IS HERE:", this.props.cookies)
 
-		this.props.history.push('/login');
 		// this command above returns you to the homepage
+		if (this.props.cookies.cookies.loggedIn) {
+			this.props.history.push('/recipesform');
+		}
 	}
 
 	render () {
@@ -114,3 +106,5 @@ export default class Login extends Component {
 		);
 	}
 }
+
+export default withCookies(Login)
